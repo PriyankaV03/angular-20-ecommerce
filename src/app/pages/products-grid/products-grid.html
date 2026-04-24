@@ -1,0 +1,29 @@
+<mat-sidenav-container>
+    <mat-sidenav mode="side" opened="true">
+        <div class="p-6">
+            <h2 class="text-lg text-gray-900">Categories</h2>
+            <mat-nav-list>
+                @for(c of categories(); track c) {
+                <mat-list-item [activated]="c === category()" class="my-2" [routerLink]="['/products', c]">
+                    <span class="font-medium" matListItemTitle [class]="c === category() ? '!text-white' : null">{{c |
+                        titlecase}}</span>
+                </mat-list-item>
+                }
+            </mat-nav-list>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content class="bg-gray-100 p-6 h-full">
+        <h1 class="text-2xl font-bold text-gray-900">{{category() | titlecase}}</h1>
+        <p class="text-base text-gray-600 mb-6">
+            {{ store.filteredProducts().length }} products found
+        </p>
+        <div class="responsive-grid">
+            @for(product of store.filteredProducts(); track product.id) {
+            <psv-product-card [product]="product">
+                <psv-toggle-wishlist-button class="!absolute z-10 top-3 right-3"
+                    [product]="product"></psv-toggle-wishlist-button>
+            </psv-product-card>
+            }
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
