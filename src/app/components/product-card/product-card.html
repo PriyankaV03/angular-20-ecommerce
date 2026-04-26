@@ -1,9 +1,11 @@
-<div class="relative bg-white cursor-pointer rounded-xl shadow-lg overflow-hidden flex flex-col h-full">
+<div
+    class="relative bg-white cursor-pointer rounded-xl shadow-lg overflow-hidden flex flex-col h-full transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-xl">
     <img [src]="product().imageUrl" [alt]="product().name" class="w-full h-[300px] object-cover rounded-t-xl"
-        referrerpolicy="no-referrer" />
+        [routerLink]="['/product', product().id]" referrerpolicy="no-referrer"
+        [style.view-transition-name]="'product-image' + product().id" />
 
     <ng-content />
-    <div class="p-5 flex flex-col flex-1">
+    <div class="p-5 flex flex-col flex-1" [routerLink]="['/product', product().id]">
         <h3 class="text-lg font-semibold text-gray-900 mb-2 leading-tight">
             {{product().name}}
         </h3>
@@ -11,7 +13,9 @@
             {{product().description}}
         </p>
 
-        <!-- add rating ccomponent -->
+        <psv-star-rating class="mb-3" [rating]="product().rating">
+            ( {{ product().reviewCount }} )
+        </psv-star-rating>
 
         <div class="text-sm font-medium mb-4">
             {{ product().inStock ? 'In Stock' : 'Out of Stock' }}
